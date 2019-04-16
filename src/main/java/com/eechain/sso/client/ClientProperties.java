@@ -24,7 +24,7 @@ public class ClientProperties {
   private Long appId;
   // 默认开启单点登陆
   private boolean enabled = true;
-  // "web" or "client"
+  // "web" or "client" or "apiKey"
   private String type;
 
 }

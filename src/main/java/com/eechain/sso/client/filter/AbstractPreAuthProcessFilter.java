@@ -86,7 +86,7 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
                                        Object currentAuthentication) throws Exception {
     AuthContextHolder.clearContext();
     if (authFailureHandler != null) {
-      authFailureHandler.onAuthenticationFailure(request, response, currentAuthentication);
+      authFailureHandler.onAuthenticationFailure(request, response, null);
     }
   }
 

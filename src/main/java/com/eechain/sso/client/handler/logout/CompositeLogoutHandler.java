@@ -1,5 +1,7 @@
 package com.eechain.sso.client.handler.logout;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 /**
  * Create by haloo on 2019-04-09
  */
+@Slf4j
 public final class CompositeLogoutHandler implements LogoutHandler {
 
   private List<LogoutHandler> logoutHandlers = new ArrayList<>();

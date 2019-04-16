@@ -23,9 +23,10 @@ public class RequestHeaderClearingLogoutHandller implements LogoutHandler {
   };
 
   @Override
-  public void onLogout(HttpServletRequest request, HttpServletResponse response, Object authentication) {
+  public void onLogout(HttpServletRequest request,
+                       HttpServletResponse response, Object authentication) {
     HEAD_MAP.forEach((key, value) -> {
-      request.getHeader(value);
+
     });
   }
 }

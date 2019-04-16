@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Create by haloo on 2019-04-09
  */
 @Slf4j
-public abstract class AbstractAuthTaretUrlRequestHandler {
+public abstract class AbstractAuthTargetUrlRequestHandler {
 
   private String targetUrlParameter;
 
@@ -28,7 +28,8 @@ public abstract class AbstractAuthTaretUrlRequestHandler {
                         Object authentication) throws Exception {
     String targetUrl = determineTargetUrl(request);
     if (response.isCommitted()) {
-      log.debug("response  has already been committed. Unable  to redirect to  {}  ", targetUrl);
+      log.debug("response  has already been committed. Unable  to redirect to  {}  ",
+          targetUrl);
       return;
     }
     redirectStrategy.redirect(request, response, targetUrl);
@@ -63,8 +64,9 @@ public abstract class AbstractAuthTaretUrlRequestHandler {
 
 
   public void setDefaultTargetUrl(String defaultTargetUrl) {
-    Assert.isTrue(UrlUtils.isValidRedirectUrl(defaultTargetUrl), "defaultTargetUrl must " +
-        "start with '/'  or http(s)");
+    Assert.isTrue(UrlUtils.isValidRedirectUrl(defaultTargetUrl),
+        "defaultTargetUrl must " +
+            "start with '/'  or http(s)");
     this.defaultTargetUrl = defaultTargetUrl;
   }
 
@@ -77,6 +79,7 @@ public abstract class AbstractAuthTaretUrlRequestHandler {
   }
 
   public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
+
     this.redirectStrategy = redirectStrategy;
   }
 

@@ -5,10 +5,14 @@ import com.eechain.sso.client.handler.AuthFailureHandler;
 import com.eechain.sso.client.handler.AuthSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**
@@ -25,7 +29,8 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
   private boolean invalidateSessionOnPrincipalChange = true;
 
   @Override
-  public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+  public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain)
+      throws IOException, ServletException {
 
     if (requiresAuthentication((HttpServletRequest) req)) {
       doAuthenticate((HttpServletRequest) req, (HttpServletResponse) resp);

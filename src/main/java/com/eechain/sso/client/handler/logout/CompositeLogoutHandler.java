@@ -29,7 +29,8 @@ public final class CompositeLogoutHandler implements LogoutHandler {
   }
 
   @Override
-  public void onLogout(HttpServletRequest request, HttpServletResponse response, Object authentication) {
+  public void onLogout(HttpServletRequest request,
+                       HttpServletResponse response, Object authentication) {
     this.logoutHandlers.forEach((handler) -> onLogout(request, response, authentication));
   }
 }

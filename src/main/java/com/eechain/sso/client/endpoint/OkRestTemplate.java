@@ -1,16 +1,19 @@
 package com.eechain.sso.client.endpoint;
 
+import com.eechain.sso.client.utils.OKHttpUtils;
 import lombok.Getter;
 import lombok.Setter;
+import okhttp3.RequestBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Callback;
 import okhttp3.Call;
+import okhttp3.Callback;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,6 +57,7 @@ public class OkRestTemplate {
   public Response syncGet(String url) throws IOException {
 
     this.request = new Request.Builder()
+        .get()
         .url(url)
         .build();
 
@@ -62,12 +66,36 @@ public class OkRestTemplate {
     return response;
   }
 
-  public void asyncget(String url) throws IOException {
+  public void asyncGet(String url) throws IOException {
 
     this.request = new Request.Builder()
+        .get()
         .url(url)
         .build();
 
+    this.okHttpClient.newCall(request).enqueue(new ResponseCallback(okHttpClient, request));
+  }
+
+
+  public Response syncPost(String url, Map<String, Object> param) throws IOException {
+    RequestBody requestBody = OKHttpUtils.parseParams(param);
+    this.request = new Request.Builder()
+        .post(requestBody)
+        .url(url)
+        .build();
+
+    Call call = this.okHttpClient.newCall(request);
+    Response response = call.execute();
+    return response;
+  }
+
+
+  public void asyncPost(String url, Map<String, Object> param) throws IOException {
+    RequestBody requestBody = OKHttpUtils.parseParams(param);
+    this.request = new Request.Builder()
+        .post(requestBody)
+        .url(url)
+        .build();
     this.okHttpClient.newCall(request).enqueue(new ResponseCallback(okHttpClient, request));
   }
 

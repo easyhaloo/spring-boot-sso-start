@@ -1,8 +1,11 @@
 package com.eechain.sso.client.filter;
 
+import com.eechain.sso.client.authentication.AuthToken;
 import com.eechain.sso.client.authentication.Authentication;
 import com.eechain.sso.client.context.AuthContextHolder;
+import com.eechain.sso.client.exception.AuthenticationException;
 import com.eechain.sso.client.handler.AuthFailureHandler;
+import com.eechain.sso.client.handler.AuthManager;
 import com.eechain.sso.client.handler.AuthSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,12 +26,13 @@ import java.io.IOException;
 @Slf4j
 public abstract class AbstractPreAuthProcessFilter implements Filter {
 
-
   private AuthSuccessHandler authSuccessHandler;
   private AuthFailureHandler authFailureHandler;
 
   private boolean checkForPrincipalChanges;
   private boolean invalidateSessionOnPrincipalChange = true;
+
+  private AuthManager authManager;
 
   @Override
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain)
@@ -41,21 +45,33 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
   }
 
 
-  private void doAuthenticate(HttpServletRequest request, HttpServletResponse response) {
-    Object authentication;
+  private void doAuthenticate(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
     Object principal = getPrincipal(request);
     Object credentials = getCredentials(request);
 
     if (principal == null) {
-      return;
+      throw new AuthenticationException("用户名不存在");
     }
 
+    if (credentials == null) {
+      throw new AuthenticationException("验证失败");
+    }
 
+    AuthToken authToken = new AuthToken(principal, credentials);
+
+    try {
+      Authentication authentication = authManager.onAuthenticated(authToken);
+      successfulAuthentication(request, response, authentication);
+    } catch (AuthenticationException e) {
+      failureAuthentication(request, response, e);
+      throw e;
+    }
   }
 
 
   private boolean requiresAuthentication(HttpServletRequest request) {
-    Object currentUser = AuthContextHolder.getContext().getAuthentication();
+    Authentication currentUser = AuthContextHolder.getContext().getAuthentication();
     if (currentUser == null) {
       return true;
     }
@@ -80,8 +96,10 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
   }
 
 
-  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                          Authentication currentAuthentication) throws Exception {
+  protected void successfulAuthentication(HttpServletRequest request,
+                                          HttpServletResponse response,
+                                          Authentication currentAuthentication)
+      throws IOException, ServletException {
     AuthContextHolder.getContext().setAuthentication(currentAuthentication);
 
     if (authSuccessHandler != null) {
@@ -89,15 +107,16 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
     }
   }
 
-  protected void failureAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                       Object currentAuthentication) throws Exception {
+  protected void failureAuthentication(HttpServletRequest request,
+                                       HttpServletResponse response, AuthenticationException ex)
+      throws IOException, ServletException {
     AuthContextHolder.clearContext();
     if (authFailureHandler != null) {
-      authFailureHandler.onAuthenticationFailure(request, response, null);
+      authFailureHandler.onAuthenticationFailure(request, response, ex);
     }
   }
 
-  protected boolean principalChanged(HttpServletRequest request, Object authentication) {
+  protected boolean principalChanged(HttpServletRequest request, Authentication authentication) {
     Object principal = getPrincipal(request);
     if ((principal instanceof String) && authentication.equals(principal)) {
       return false;
@@ -125,6 +144,14 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
 
   public void setInvalidateSessionOnPrincipalChange(boolean invalidateSessionOnPrincipalChange) {
     this.invalidateSessionOnPrincipalChange = invalidateSessionOnPrincipalChange;
+  }
+
+  public void setAuthManager(AuthManager authManager) {
+    this.authManager = authManager;
+  }
+
+  public AuthManager getAuthManager() {
+    return authManager;
   }
 
   protected abstract Object getPrincipal(HttpServletRequest request);

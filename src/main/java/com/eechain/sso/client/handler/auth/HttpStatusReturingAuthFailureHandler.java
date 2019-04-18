@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
@@ -30,7 +31,7 @@ public class HttpStatusReturingAuthFailureHandler implements AuthFailureHandler 
 
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                      AuthenticationException ex) throws Exception {
+                                      AuthenticationException ex) throws IOException {
     log.debug("user authentication is failure , response code : {} ", response.getStatus(), ex);
     this.code = response.getStatus();
     this.message = ex.getMessage();

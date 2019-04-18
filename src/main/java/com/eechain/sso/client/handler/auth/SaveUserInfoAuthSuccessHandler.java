@@ -27,7 +27,7 @@ public class SaveUserInfoAuthSuccessHandler implements AuthSuccessHandler {
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                      Authentication authentication) throws Exception {
+                                      Authentication authentication) {
     this.authContext.setAuthentication(authentication);
     AuthContextHolder.setContext(this.authContext);
   }

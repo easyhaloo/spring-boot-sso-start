@@ -12,4 +12,6 @@ public interface Authentication extends Serializable {
 
   Object getCredential();
 
+  Boolean isAuthentication();
+
 }

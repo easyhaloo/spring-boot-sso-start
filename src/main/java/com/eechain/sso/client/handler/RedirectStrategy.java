@@ -1,7 +1,9 @@
 package com.eechain.sso.client.handler;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Create b
@@ -18,5 +20,5 @@ public interface RedirectStrategy {
    * @throws Exception
    */
   void redirect(HttpServletRequest request, HttpServletResponse response,
-                String targetUrl) throws Exception;
+                String targetUrl) throws IOException, ServletException;
 }

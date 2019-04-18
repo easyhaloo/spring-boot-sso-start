@@ -8,9 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * 认证失败，跳转到一个特定到地址
@@ -34,8 +36,9 @@ public class SimpleUrlAuthFailureHandler extends
   }
 
   @Override
-  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                      AuthenticationException ex) throws Exception {
+  public void onAuthenticationFailure(HttpServletRequest request,
+                                      HttpServletResponse response, AuthenticationException ex)
+      throws IOException, ServletException {
 
     if (defaultFailureUrl == null) {
       response.sendError(HttpStatus.UNAUTHORIZED.value(),

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Create by haloo on 2019-04-09
@@ -18,11 +19,9 @@ public class DefaultRedirectStrategy implements RedirectStrategy {
 
   @Override
   public void redirect(HttpServletRequest request, HttpServletResponse response,
-                       String targetUrl) throws Exception {
+                       String targetUrl) throws IOException {
     String redirectUrl = calculateRedirectUrl(request.getContextPath(), targetUrl);
     redirectUrl = response.encodeRedirectURL(redirectUrl);
-
-
     response.sendRedirect(redirectUrl);
   }
 

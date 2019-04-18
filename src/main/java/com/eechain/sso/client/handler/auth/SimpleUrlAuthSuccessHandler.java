@@ -7,8 +7,10 @@ import com.eechain.sso.client.utils.UrlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Create by haloo on 2019-04-18
@@ -27,8 +29,9 @@ public class SimpleUrlAuthSuccessHandler
   }
 
   @Override
-  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                      Authentication authentication) throws Exception {
+  public void onAuthenticationSuccess(HttpServletRequest request,
+                                      HttpServletResponse response, Authentication authentication)
+      throws IOException, ServletException {
     redirectStrategy.redirect(request, response, targetUrl);
   }
 

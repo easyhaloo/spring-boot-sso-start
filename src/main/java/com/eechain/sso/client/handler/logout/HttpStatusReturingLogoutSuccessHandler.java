@@ -1,5 +1,7 @@
 package com.eechain.sso.client.handler.logout;
 
+import com.eechain.sso.client.authentication.Authentication;
+import com.eechain.sso.client.handler.LogoutSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
@@ -28,7 +30,7 @@ public class HttpStatusReturingLogoutSuccessHandler implements LogoutSuccessHand
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-                              Object authentication) throws Exception {
+                              Authentication authentication) throws Exception {
     log.debug("logout is success . the response status code : {}", httpStatus.value());
     response.setStatus(httpStatus.value());
     response.getWriter().flush();

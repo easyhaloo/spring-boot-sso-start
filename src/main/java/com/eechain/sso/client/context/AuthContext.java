@@ -1,5 +1,7 @@
 package com.eechain.sso.client.context;
 
+import com.eechain.sso.client.authentication.Authentication;
+
 import java.io.Serializable;
 
 /**
@@ -8,8 +10,8 @@ import java.io.Serializable;
  */
 public interface AuthContext extends Serializable {
 
-  Object getAuthentication();
+  Authentication getAuthentication();
 
 
-  void setAuthentication(Object authentication);
+  void setAuthentication(Authentication authentication);
 }

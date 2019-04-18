@@ -65,6 +65,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!--ok-http-->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>commons-codec</groupId>
@@ -122,7 +129,6 @@
 
     <reporting>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -138,15 +144,6 @@
                     </reportSet>
                 </reportSets>
             </plugin>
-
-
-            <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>findbugs-maven-plugin</artifactId>-->
-            <!--<version>${findbugs.version}</version>-->
-            <!--</plugin>-->
         </plugins>
-
     </reporting>
-
 </project>

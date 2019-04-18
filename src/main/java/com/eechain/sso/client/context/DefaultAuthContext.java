@@ -1,5 +1,7 @@
 package com.eechain.sso.client.context;
 
+import com.eechain.sso.client.authentication.Authentication;
+
 import java.util.Objects;
 
 /**
@@ -9,32 +11,36 @@ public class DefaultAuthContext implements AuthContext {
 
   private static final long serialVersionUID = -1L;
 
-  private Object authentication;
+  private Authentication authentication;
 
 
   public DefaultAuthContext() {
   }
 
-  public DefaultAuthContext(Object authentication) {
+  public DefaultAuthContext(Authentication authentication) {
     this.authentication = authentication;
   }
 
 
   @Override
-  public Object getAuthentication() {
+  public Authentication getAuthentication() {
     return authentication;
   }
 
   @Override
-  public void setAuthentication(Object authentication) {
+  public void setAuthentication(Authentication authentication) {
     this.authentication = authentication;
   }
 
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     DefaultAuthContext that = (DefaultAuthContext) o;
     return Objects.equals(authentication, that.authentication);
   }

@@ -1,5 +1,7 @@
 package com.eechain.sso.client.handler;
 
+import com.eechain.sso.client.authentication.Authentication;
+import com.eechain.sso.client.handler.redirect.DefaultRedirectStrategy;
 import com.eechain.sso.client.utils.UrlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public abstract class AbstractAuthTargetUrlRequestHandler {
 
+
+  protected RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
   private String targetUrlParameter;
 
   private String defaultTargetUrl = "/";
@@ -22,11 +27,11 @@ public abstract class AbstractAuthTargetUrlRequestHandler {
 
   private boolean useReferer = false;
 
-  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
 
 
   protected void handle(HttpServletRequest request, HttpServletResponse response,
-                        Object authentication) throws Exception {
+                        Authentication authentication) throws Exception {
     String targetUrl = determineTargetUrl(request);
     if (response.isCommitted()) {
       log.debug("response  has already been committed. Unable  to redirect to  {}  ",

@@ -1,5 +1,7 @@
-package com.eechain.sso.client.handler.logout;
+package com.eechain.sso.client.handler;
 
+
+import com.eechain.sso.client.authentication.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,5 +18,6 @@ public interface LogoutHandler {
    * @param response
    * @param authentication
    */
-  void onLogout(HttpServletRequest request, HttpServletResponse response, Object authentication);
+  void onLogout(HttpServletRequest request, HttpServletResponse response,
+                Authentication authentication);
 }

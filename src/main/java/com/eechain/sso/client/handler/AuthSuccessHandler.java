@@ -1,5 +1,7 @@
 package com.eechain.sso.client.handler;
 
+import com.eechain.sso.client.authentication.Authentication;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,5 +19,5 @@ public interface AuthSuccessHandler {
    * @throws Exception
    */
   void onAuthenticationSuccess(HttpServletRequest request
-      , HttpServletResponse response, Object authentication) throws Exception;
+      , HttpServletResponse response, Authentication authentication) throws Exception;
 }

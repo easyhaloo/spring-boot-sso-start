@@ -1,5 +1,7 @@
 package com.eechain.sso.client.handler.logout;
 
+import com.eechain.sso.client.authentication.Authentication;
+import com.eechain.sso.client.handler.LogoutHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,7 @@ public final class CompositeLogoutHandler implements LogoutHandler {
 
   @Override
   public void onLogout(HttpServletRequest request,
-                       HttpServletResponse response, Object authentication) {
+                       HttpServletResponse response, Authentication authentication) {
     this.logoutHandlers.forEach((handler) -> onLogout(request, response, authentication));
   }
 }

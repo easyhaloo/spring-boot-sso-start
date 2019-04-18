@@ -1,5 +1,6 @@
 package com.eechain.sso.client.handler.logout;
 
+import com.eechain.sso.client.handler.LogoutHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;

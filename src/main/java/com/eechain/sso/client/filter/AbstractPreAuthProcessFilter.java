@@ -1,5 +1,6 @@
 package com.eechain.sso.client.filter;
 
+import com.eechain.sso.client.authentication.Authentication;
 import com.eechain.sso.client.context.AuthContextHolder;
 import com.eechain.sso.client.handler.AuthFailureHandler;
 import com.eechain.sso.client.handler.AuthSuccessHandler;
@@ -80,7 +81,7 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
 
 
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                          Object currentAuthentication) throws Exception {
+                                          Authentication currentAuthentication) throws Exception {
     AuthContextHolder.getContext().setAuthentication(currentAuthentication);
 
     if (authSuccessHandler != null) {

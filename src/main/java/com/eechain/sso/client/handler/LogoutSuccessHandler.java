@@ -1,4 +1,6 @@
-package com.eechain.sso.client.handler.logout;
+package com.eechain.sso.client.handler;
+
+import com.eechain.sso.client.authentication.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,5 +23,5 @@ public interface LogoutSuccessHandler {
    * @throws Exception
    */
   void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-                       Object authentication) throws Exception;
+                       Authentication authentication) throws Exception;
 }

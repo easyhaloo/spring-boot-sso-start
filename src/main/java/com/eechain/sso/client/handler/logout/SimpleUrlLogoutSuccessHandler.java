@@ -1,7 +1,9 @@
 package com.eechain.sso.client.handler.logout;
 
 
+import com.eechain.sso.client.authentication.Authentication;
 import com.eechain.sso.client.handler.AbstractAuthTargetUrlRequestHandler;
+import com.eechain.sso.client.handler.LogoutSuccessHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,7 @@ public class SimpleUrlLogoutSuccessHandler extends AbstractAuthTargetUrlRequestH
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-                              Object authentication) throws Exception {
+                              Authentication authentication) throws Exception {
     super.handle(request, response, authentication);
   }
 }

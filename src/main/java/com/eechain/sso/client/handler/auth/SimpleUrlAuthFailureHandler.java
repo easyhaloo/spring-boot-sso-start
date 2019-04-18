@@ -1,6 +1,8 @@
-package com.eechain.sso.client.handler;
+package com.eechain.sso.client.handler.auth;
 
 import com.eechain.sso.client.exception.AuthenticationException;
+import com.eechain.sso.client.handler.AbstractAuthTargetUrlRequestHandler;
+import com.eechain.sso.client.handler.AuthFailureHandler;
 import com.eechain.sso.client.utils.UrlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,6 @@ public class SimpleUrlAuthFailureHandler extends
   private boolean allowSessionCreation = true;
   private boolean forwardToDestination = false;
 
-  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
   public SimpleUrlAuthFailureHandler() {
 
@@ -45,7 +46,7 @@ public class SimpleUrlAuthFailureHandler extends
         request.getRequestDispatcher(defaultFailureUrl)
             .forward(request, response);
       } else {
-
+        this.redirectStrategy.redirect(request, response, defaultFailureUrl);
       }
     }
   }

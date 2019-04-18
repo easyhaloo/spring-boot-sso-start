@@ -5,7 +5,7 @@ import org.springframework.util.Assert;
 /**
  * Create by haloo on 2019-04-09
  */
-public final class ThreadLocaContextHolderStrategy implements ContextHolderStrategy {
+public final class ThreadLocalContextHolderStrategy implements ContextHolderStrategy {
 
   private static final ThreadLocal<AuthContext> CONTEXT_HOLDER = new ThreadLocal<>();
 

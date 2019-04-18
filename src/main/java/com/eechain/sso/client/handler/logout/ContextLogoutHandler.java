@@ -1,7 +1,9 @@
 package com.eechain.sso.client.handler.logout;
 
+import com.eechain.sso.client.authentication.Authentication;
 import com.eechain.sso.client.context.AuthContext;
 import com.eechain.sso.client.context.AuthContextHolder;
+import com.eechain.sso.client.handler.LogoutHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
@@ -21,7 +23,8 @@ public class ContextLogoutHandler implements LogoutHandler {
 
 
   @Override
-  public void onLogout(HttpServletRequest request, HttpServletResponse response, Object authentication) {
+  public void onLogout(HttpServletRequest request, HttpServletResponse response,
+                       Authentication authentication) {
     Assert.notNull(request, "HttpServletRequest required");
     // 让session 失效
     if (invalidateHttpSession) {

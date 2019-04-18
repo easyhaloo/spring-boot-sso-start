@@ -1,5 +1,7 @@
 package com.eechain.sso.client.handler.logout;
 
+import com.eechain.sso.client.authentication.Authentication;
+import com.eechain.sso.client.handler.LogoutSuccessHandler;
 import com.eechain.sso.client.utils.UrlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
@@ -24,7 +26,7 @@ public class ForwardLogoutSuccessHandler implements LogoutSuccessHandler {
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-                              Object authentication) throws Exception {
+                              Authentication authentication) throws Exception {
     log.debug("forward target Url is  {} ", targetUrl);
     request.getRequestDispatcher(targetUrl).forward(request, response);
   }

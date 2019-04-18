@@ -1,5 +1,6 @@
-package com.eechain.sso.client.handler;
+package com.eechain.sso.client.handler.redirect;
 
+import com.eechain.sso.client.handler.RedirectStrategy;
 import com.eechain.sso.client.utils.UrlUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +17,8 @@ public class DefaultRedirectStrategy implements RedirectStrategy {
   private boolean contextRelative;
 
   @Override
-  public void redirect(HttpServletRequest request, HttpServletResponse response, String targetUrl) throws Exception {
+  public void redirect(HttpServletRequest request, HttpServletResponse response,
+                       String targetUrl) throws Exception {
     String redirectUrl = calculateRedirectUrl(request.getContextPath(), targetUrl);
     redirectUrl = response.encodeRedirectURL(redirectUrl);
 

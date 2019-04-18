@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Cookie处理Handler
+ * Cookie处理Handler,清除cookie，用于web登陆的
  * Create by haloo on 2019-04-09
  */
 @Slf4j
@@ -24,7 +24,8 @@ public class CookieLogoutHandler implements LogoutHandler {
   }
 
   @Override
-  public void onLogout(HttpServletRequest request, HttpServletResponse response, Object authentication) {
+  public void onLogout(HttpServletRequest request, HttpServletResponse response,
+                       Object authentication) {
     for (String cookieName : cookiesToClear) {
       Cookie cookie = new Cookie(cookieName, null);
       String cookiePath = request.getContextPath() + "/";

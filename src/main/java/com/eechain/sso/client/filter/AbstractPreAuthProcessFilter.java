@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**
+ * 前置认证处理器
  * Create by haloo on 2019-04-09
  */
 @Slf4j

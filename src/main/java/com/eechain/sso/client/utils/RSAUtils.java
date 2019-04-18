@@ -3,10 +3,11 @@ package com.eechain.sso.client.utils;
 
 import org.apache.commons.codec.binary.Base64;
 
-import javax.crypto.*;
+import javax.crypto.SecretKey;
+import javax.crypto.Cipher;
+import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -18,9 +19,6 @@ import java.util.Map;
  * Create by haloo on 2019-04-08
  */
 public final class RSAUtils {
-
-  private RSAUtils() {
-  }
 
 
   public static final String KEY_ALGORITHM = "RSA";
@@ -42,6 +40,9 @@ public final class RSAUtils {
   private static final int MAX_ENCRYPT_BLOCK = 117;
   // 最大的解密串长度
   private static final int MAX_DECRYPT_BLOCK = 128;
+
+  private RSAUtils() {
+  }
 
 
   public static byte[] decryptBase64(String key) {
@@ -65,7 +66,9 @@ public final class RSAUtils {
   }
 
 
-  public static String sign(byte[] data, String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
+  public static String sign(byte[] data, String privateKey)
+      throws NoSuchAlgorithmException, InvalidKeySpecException,
+      InvalidKeyException, SignatureException {
     PrivateKey pvk = generatorPrivateKey(privateKey);
     Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
     signature.initSign(pvk);
@@ -74,7 +77,9 @@ public final class RSAUtils {
   }
 
 
-  public static boolean verify(byte[] data, String publicKey, String sign) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
+  public static boolean verify(byte[] data, String publicKey, String sign)
+      throws NoSuchAlgorithmException, InvalidKeySpecException,
+      InvalidKeyException, SignatureException {
     PublicKey pubKey = generatorPublicKey(publicKey);
     Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
     signature.initVerify(pubKey);
@@ -108,7 +113,8 @@ public final class RSAUtils {
   }
 
 
-  public static String generatorHMAC(String data, String key) throws NoSuchAlgorithmException, InvalidKeyException {
+  public static String generatorHMAC(String data, String key)
+      throws NoSuchAlgorithmException, InvalidKeyException {
     byte[] keyBytes = key.getBytes();
     SecretKey secretKey = new SecretKeySpec(keyBytes, HMAC_SHA1_ALGORITHM);
     Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
@@ -118,7 +124,8 @@ public final class RSAUtils {
   }
 
 
-  private static byte[] cryptWithBlock(byte[] data, Cipher cipher, int blockSize) throws Exception {
+  private static byte[] cryptWithBlock(byte[] data, Cipher cipher, int blockSize)
+      throws Exception {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     int i = 0, offset = 0, inLen = data.length;
     byte[] cache;
@@ -147,7 +154,8 @@ public final class RSAUtils {
    * @throws NoSuchAlgorithmException
    * @throws InvalidKeySpecException
    */
-  private static PublicKey generatorPublicKey(String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  private static PublicKey generatorPublicKey(String key)
+      throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] keyBytes = decryptBase64(key);
     X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
     KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -164,7 +172,8 @@ public final class RSAUtils {
    * @throws NoSuchAlgorithmException
    * @throws InvalidKeySpecException
    */
-  private static PrivateKey generatorPrivateKey(String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  private static PrivateKey generatorPrivateKey(String key)
+      throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] keyBytes = decryptBase64(key);
     PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
     KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);

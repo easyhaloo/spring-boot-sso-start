@@ -16,7 +16,7 @@ public final class UrlUtils {
     return url != null && url.startsWith("/") && isAbsoluteUrl(url);
   }
 
-  public  static boolean isAbsoluteUrl(String url) {
+  public static boolean isAbsoluteUrl(String url) {
     if (url == null) {
       return false;
     }

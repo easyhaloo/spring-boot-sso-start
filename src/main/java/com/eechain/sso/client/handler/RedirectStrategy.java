@@ -4,7 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Create by haloo on 2019-04-09
+ * Create b
+ * y haloo on 2019-04-09
  */
 public interface RedirectStrategy {
 
@@ -16,5 +17,6 @@ public interface RedirectStrategy {
    * @param targetUrl
    * @throws Exception
    */
-  void redirect(HttpServletRequest request, HttpServletResponse response, String targetUrl) throws Exception;
+  void redirect(HttpServletRequest request, HttpServletResponse response,
+                String targetUrl) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.eechain.sso.client.context;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Constructor;
@@ -9,10 +10,10 @@ import static com.eechain.sso.client.context.ContextStrategy.CUSTOMER;
 /**
  * Create by haloo on 2019-04-09
  */
+@Slf4j
 public class AuthContextHolder {
   private static ContextHolderStrategy contextHolderStrategy;
 
-//  private static int initializeCount = 0;
 
   private static ContextStrategy strategy;
 
@@ -25,19 +26,25 @@ public class AuthContextHolder {
     switch (strategy) {
       case THREAD_LOCAL:
         contextHolderStrategy = new ThreadLocaContextHolderStrategy();
+        break;
       case INHERITABLE_THREAD_LOCAL:
         contextHolderStrategy = new InheritableThreadLocalContextHolderStrategy();
+        break;
       case CUSTOMER:
         try {
           Class<?> clazz = Class.forName(CUSTOMER.getStrategyName());
           Constructor<?> constructor = clazz.getConstructor();
           contextHolderStrategy = (ContextHolderStrategy) constructor.newInstance();
+          break;
         } catch (Exception e) {
           ReflectionUtils.handleReflectionException(e);
         }
       default:
         contextHolderStrategy = new ThreadLocaContextHolderStrategy();
+        break;
     }
+    log.debug("using  {} as context strategy ", strategy);
+
   }
 
 

@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ *  认证失败，跳转到一个特定到地址
  * Create by haloo on 2019-04-09
  */
 @Slf4j
-public class SimpleUrlAuthFailureHandler extends AbstractAuthTaretUrlRequestHandler implements AuthFailureHandler {
+public class SimpleUrlAuthFailureHandler extends
+    AbstractAuthTargetUrlRequestHandler implements AuthFailureHandler {
 
   private String defaultFailureUrl;
   private boolean allowSessionCreation = true;
@@ -31,7 +33,8 @@ public class SimpleUrlAuthFailureHandler extends AbstractAuthTaretUrlRequestHand
   }
 
   @Override
-  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws Exception {
+  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                      AuthenticationException ex) throws Exception {
 
     if (defaultFailureUrl == null) {
       response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
@@ -60,7 +63,8 @@ public class SimpleUrlAuthFailureHandler extends AbstractAuthTaretUrlRequestHand
 
   public void setDefaultFailureUrl(String defaultFailureUrl) {
     boolean validRedirectUrl = UrlUtils.isValidRedirectUrl(defaultFailureUrl);
-    Assert.isTrue(validRedirectUrl, "defaultFailureUrl : { " + defaultFailureUrl + "}  is not valid redirect url.");
+    Assert.isTrue(validRedirectUrl,
+        "defaultFailureUrl : { " + defaultFailureUrl + "}  is not valid redirect url.");
     this.defaultFailureUrl = defaultFailureUrl;
   }
 

@@ -18,7 +18,8 @@ public abstract class AbstractAuthTargetUrlRequestHandler {
 
   private String defaultTargetUrl = "/";
 
-  private boolean alwaysUseDefaultTargetUrl = false;
+  protected boolean alwaysUseDefaultTargetUrl = false;
+
   private boolean useReferer = false;
 
   private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -36,7 +37,7 @@ public abstract class AbstractAuthTargetUrlRequestHandler {
   }
 
 
-  protected String determineTargetUrl(HttpServletRequest request) {
+  private String determineTargetUrl(HttpServletRequest request) {
     if (isAlwaysUseDefaultTargetUrl()) {
       return defaultTargetUrl;
     }

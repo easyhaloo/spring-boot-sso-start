@@ -12,6 +12,7 @@ public interface ContextHolderStrategy {
 
 
   void setContext(AuthContext authContext);
+  
 
   AuthContext createEmptyContext();
 }

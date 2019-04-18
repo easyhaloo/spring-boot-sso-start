@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *  认证失败，跳转到一个特定到地址
+ * 认证失败，跳转到一个特定到地址
  * Create by haloo on 2019-04-09
  */
 @Slf4j
@@ -37,7 +37,8 @@ public class SimpleUrlAuthFailureHandler extends
                                       AuthenticationException ex) throws Exception {
 
     if (defaultFailureUrl == null) {
-      response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+      response.sendError(HttpStatus.UNAUTHORIZED.value(),
+          HttpStatus.UNAUTHORIZED.getReasonPhrase());
     } else {
       saveException(request, ex);
       if (forwardToDestination) {

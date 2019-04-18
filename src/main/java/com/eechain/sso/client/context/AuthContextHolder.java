@@ -23,6 +23,7 @@ public class AuthContextHolder {
 
 
   private static void init() {
+    contextHolderStrategy = new ThreadLocaContextHolderStrategy();
     switch (strategy) {
       case THREAD_LOCAL:
         contextHolderStrategy = new ThreadLocaContextHolderStrategy();
@@ -39,12 +40,8 @@ public class AuthContextHolder {
         } catch (Exception e) {
           ReflectionUtils.handleReflectionException(e);
         }
-      default:
-        contextHolderStrategy = new ThreadLocaContextHolderStrategy();
-        break;
     }
     log.debug("using  {} as context strategy ", strategy);
-
   }
 
 

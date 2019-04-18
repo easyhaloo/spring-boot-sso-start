@@ -18,7 +18,7 @@ public abstract class AbstractAuthTargetUrlRequestHandler {
 
   private String defaultTargetUrl = "/";
 
-  protected boolean alwaysUseDefaultTargetUrl = false;
+  private boolean alwaysUseDefaultTargetUrl = false;
 
   private boolean useReferer = false;
 

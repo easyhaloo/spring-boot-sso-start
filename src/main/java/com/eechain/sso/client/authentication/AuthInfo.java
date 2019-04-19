@@ -11,9 +11,12 @@ import java.io.Serializable;
 @Data
 public class AuthInfo implements Authentication, Serializable {
   private static final long serialVersionUID = -8554797799602550641L;
-
+  private String name;
+  private Object principle;
+  private Object credential;
   private String accessToken;
   private String refreshToken;
+
 
   @Override
   public Object getPrincipal() {
@@ -27,6 +30,11 @@ public class AuthInfo implements Authentication, Serializable {
 
   @Override
   public Boolean isAuthentication() {
+    return true;
+  }
+
+  @Override
+  public String getName() {
     return null;
   }
 }

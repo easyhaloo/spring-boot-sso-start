@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 
 /**
  * 返回退出状态
@@ -30,7 +31,7 @@ public class HttpStatusReturingLogoutSuccessHandler implements LogoutSuccessHand
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-                              Authentication authentication) throws Exception {
+                              Authentication authentication) throws IOException {
     log.debug("logout is success . the response status code : {}", httpStatus.value());
     response.setStatus(httpStatus.value());
     response.getWriter().flush();

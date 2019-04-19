@@ -39,6 +39,7 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
       throws IOException, ServletException {
 
     if (requiresAuthentication((HttpServletRequest) req)) {
+      log.debug("authentication is changed , now need reAuthenticated");
       doAuthenticate((HttpServletRequest) req, (HttpServletResponse) resp);
     }
     filterChain.doFilter(req, resp);
@@ -51,10 +52,12 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
     Object credentials = getCredentials(request);
 
     if (principal == null) {
+      log.warn("principal is null,authentication is reject.");
       throw new AuthenticationException("用户名不存在");
     }
 
     if (credentials == null) {
+      log.warn("credentials is null,is invalid  ticket info.");
       throw new AuthenticationException("验证失败");
     }
 
@@ -73,6 +76,11 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
   private boolean requiresAuthentication(HttpServletRequest request) {
     Authentication currentUser = AuthContextHolder.getContext().getAuthentication();
     if (currentUser == null) {
+      log.warn("the authContextHolder is not hold the current user");
+      return true;
+    }
+
+    if (currentUser.getCredential() == null) {
       return true;
     }
 
@@ -118,11 +126,11 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
 
   protected boolean principalChanged(HttpServletRequest request, Authentication authentication) {
     Object principal = getPrincipal(request);
-    if ((principal instanceof String) && authentication.equals(principal)) {
+    if ((principal instanceof String) && authentication.getName().equals(principal)) {
       return false;
     }
 
-    if (principal != null && principal.equals(authentication)) {
+    if (principal != null && principal.equals(authentication.getPrincipal())) {
       return false;
     }
 

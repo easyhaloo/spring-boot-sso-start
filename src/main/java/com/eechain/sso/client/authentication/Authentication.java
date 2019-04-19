@@ -14,4 +14,6 @@ public interface Authentication extends Serializable {
 
   Boolean isAuthentication();
 
+  String getName();
+
 }

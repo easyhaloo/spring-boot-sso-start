@@ -20,4 +20,13 @@ public interface AuthManager {
    * @throws AuthenticationException
    */
   Authentication onAuthenticated(AuthToken authToken) throws AuthenticationException;
+
+
+  default void verifyTick(Authentication authentication) throws AuthenticationException {
+
+  }
+
+  default void logout(Authentication authentication) throws AuthenticationException {
+
+  }
 }

@@ -7,8 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Create by haloo on 2019-04-09
@@ -28,10 +30,8 @@ public abstract class AbstractAuthTargetUrlRequestHandler {
   private boolean useReferer = false;
 
 
-
-
   protected void handle(HttpServletRequest request, HttpServletResponse response,
-                        Authentication authentication) throws Exception {
+                        Authentication authentication) throws IOException, ServletException {
     String targetUrl = determineTargetUrl(request);
     if (response.isCommitted()) {
       log.debug("response  has already been committed. Unable  to redirect to  {}  ",

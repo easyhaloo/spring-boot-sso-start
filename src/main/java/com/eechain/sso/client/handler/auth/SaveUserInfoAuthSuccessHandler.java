@@ -6,8 +6,10 @@ import com.eechain.sso.client.context.AuthContextHolder;
 import com.eechain.sso.client.context.DefaultAuthContext;
 import com.eechain.sso.client.handler.AuthSuccessHandler;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 认证成功，保存信息到上下文
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SaveUserInfoAuthSuccessHandler implements AuthSuccessHandler {
 
   private AuthContext authContext;
+
+  private AuthSuccessHandler delegate;
 
   public SaveUserInfoAuthSuccessHandler() {
     this.authContext = new DefaultAuthContext();
@@ -26,9 +30,22 @@ public class SaveUserInfoAuthSuccessHandler implements AuthSuccessHandler {
   }
 
   @Override
-  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                      Authentication authentication) {
+  public void onAuthenticationSuccess(HttpServletRequest request,
+                                      HttpServletResponse response, Authentication authentication)
+      throws IOException, ServletException {
     this.authContext.setAuthentication(authentication);
     AuthContextHolder.setContext(this.authContext);
+    if (delegate != null) {
+      delegate.onAuthenticationSuccess(request, response, authentication);
+    }
+  }
+
+
+  public void setAuthContext(AuthContext authContext) {
+    this.authContext = authContext;
+  }
+
+  public void setDelegate(AuthSuccessHandler delegate) {
+    this.delegate = delegate;
   }
 }

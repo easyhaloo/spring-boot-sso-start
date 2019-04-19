@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * Create by haloo on 2019-04-19
  */
 
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @ConditionalOnProperty(value = "sso.client.type", havingValue = "client")
 @ConditionalOnBean(value = {OkRestTemplate.class, Generator.class})

@@ -3,15 +3,12 @@ package com.eechain.sso.client.manager;
 import com.eechain.sso.client.ClientProperties;
 import com.eechain.sso.client.utils.RSAUtils;
 import com.eechain.sso.client.utils.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.stereotype.Component;
 
 
 /**
  * Create by haloo on 2019-04-18
  */
-@Component
 @Import(ClientProperties.class)
 public class Generator {
 
@@ -19,8 +16,11 @@ public class Generator {
   private static final RandomString RANDOM_STRING = new RandomString();
   private static final String SIGN_DATA = "EEC:SSO";
 
-  @Autowired
-  private ClientProperties properties;
+  private final ClientProperties properties;
+
+  public Generator(ClientProperties properties) {
+    this.properties = properties;
+  }
 
   public String requestId() {
     return RANDOM_STRING.generate();

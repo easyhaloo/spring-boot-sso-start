@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Create by haloo on 2019-04-19
  */
-public class LoginAuthProccessFileter extends AbstractPreAuthProcessFilter {
+public class LoginAuthProcessFilter extends AbstractPreAuthProcessFilter {
 
   private static final String USER = "username";
   private static final String PASSWORD = "password";

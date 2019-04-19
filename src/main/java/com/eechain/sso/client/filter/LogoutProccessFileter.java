@@ -50,6 +50,15 @@ public class LogoutProccessFileter implements Filter {
     chain.doFilter(request, response);
   }
 
+
+  public LogoutHandler getLogoutHandler() {
+    return logoutHandler;
+  }
+
+  public LogoutSuccessHandler getLogoutSuccessHandler() {
+    return logoutSuccessHandler;
+  }
+
   private static boolean isLogout(HttpServletRequest request) {
     String requestUrl = request.getRequestURI();
     if ("logout".equalsIgnoreCase(requestUrl)) {

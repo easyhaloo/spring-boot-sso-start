@@ -12,6 +12,7 @@ import okhttp3.Callback;
 import okhttp3.RequestBody;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  * OK rest模版，用于跟sso-service 通信，或者其他子系统通信的工具
  * Create by haloo on 2019-04-18
  */
+@Component
 public class OkRestTemplate {
 
   private OkHttpClient okHttpClient;
@@ -44,8 +46,6 @@ public class OkRestTemplate {
   private boolean enabledRetry = true;
 
 
-
-
   public OkRestTemplate() {
     this.okHttpClient = new OkHttpClient.Builder()
         .connectTimeout(connectionTimeout, TimeUnit.SECONDS)
@@ -61,6 +61,7 @@ public class OkRestTemplate {
   public OkRestTemplate okRestTemplate() {
     return new OkRestTemplate();
   }
+
   /**
    * 同步调用get方法
    *

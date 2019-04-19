@@ -14,10 +14,17 @@ import java.util.Map;
  */
 public final class OKHttpUtils {
 
-  private  static final Gson GSON = new Gson();
+  private static final Gson GSON = new Gson();
 
   public static RequestBody parseParams(Map<String, Object> params) {
     String jsonData = GSON.toJson(params);
+    return RequestBody.
+        create(MediaType.parse("application/json;charset=utf-8"), jsonData);
+  }
+
+  public static RequestBody parseParam(Object params) {
+    String jsonData = GSON.toJson(params);
+    System.out.println(jsonData);
     return RequestBody.
         create(MediaType.parse("application/json;charset=utf-8"), jsonData);
   }

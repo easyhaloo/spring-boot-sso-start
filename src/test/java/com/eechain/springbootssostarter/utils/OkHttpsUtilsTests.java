@@ -22,13 +22,24 @@ public class OkHttpsUtilsTests {
 
 
   @Test
-  public void testParseParams() {
+  public void testParseParamsWithMap() {
 
     Map<String, Object> map = new HashMap<>();
     map.put("xx", "xx");
     map.put("x", 1);
     map.put("xd", new Date());
     RequestBody requestBody = OKHttpUtils.parseParams(map);
+    Assert.assertNotNull(requestBody);
+  }
+
+  @Test
+  public void testParseParams() {
+
+    TestResponse testResponse = new TestResponse();
+    testResponse.setEmail("xxx");
+    testResponse.setName("ccc");
+    testResponse.setPhone(null);
+    RequestBody requestBody = OKHttpUtils.parseParam(testResponse);
     Assert.assertNotNull(requestBody);
   }
 
@@ -66,8 +77,8 @@ public class OkHttpsUtilsTests {
     Assert.assertNotNull(testResponse);
   }
 
-}
 
+}
 
 
 @Data
@@ -75,7 +86,6 @@ class TestResponse {
   private String name;
   private String email;
   private Phone phone;
-
 
 
   @Data

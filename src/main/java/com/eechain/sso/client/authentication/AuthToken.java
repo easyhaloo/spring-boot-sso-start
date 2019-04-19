@@ -18,6 +18,7 @@ public class AuthToken implements Serializable {
   public AuthToken(Object principal, Object credential) {
     this.principal = principal;
     this.credential = credential;
+    setAuthentication(true);
   }
 
 

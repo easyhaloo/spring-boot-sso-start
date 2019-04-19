@@ -25,6 +25,9 @@ public class ClientProperties {
   // 默认开启单点登陆
   private boolean enabled = true;
   // "web" or "client" or "apiKey"
-  private String type;
+  private String type = "web";
+  // sso访问地址
+  @NotNull
+  private String serviceUrl;
 
 }

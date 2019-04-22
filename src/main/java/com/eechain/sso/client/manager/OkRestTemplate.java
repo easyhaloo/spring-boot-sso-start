@@ -38,9 +38,15 @@ public class OkRestTemplate {
   @Setter
   @Getter
   private int writeTimeout = 60;
+  /**
+   * 最大的重试次数
+   */
   @Setter
   @Getter
   private int maxRetryCount = 3;
+  /**
+   * 是否开启重试机制，默认开启
+   */
   @Setter
   @Getter
   private boolean enabledRetry = true;
@@ -72,7 +78,10 @@ public class OkRestTemplate {
   public Response syncGet(String url) throws IOException {
     this.request = createNoHeaderGetRequest(url);
     Call call = this.okHttpClient.newCall(request);
-    return call.execute();
+    if (isEnabledRetry()) {
+      return retryRequest(call, maxRetryCount);
+    }
+    return retryRequest(call, 1);
   }
 
   /**
@@ -86,7 +95,10 @@ public class OkRestTemplate {
   public Response syncGetWithHeaders(String url, Map<String, String> headers) throws IOException {
     this.request = createHeaderGetRequest(url, headers);
     Call call = this.okHttpClient.newCall(request);
-    return call.execute();
+    if (isEnabledRetry()) {
+      return retryRequest(call, maxRetryCount);
+    }
+    return retryRequest(call, 1);
   }
 
   /**
@@ -145,20 +157,25 @@ public class OkRestTemplate {
    * @return
    * @throws IOException
    */
-  public Response syncPostWithHeaders(String url, Map<String, Object> params,
-                                      Map<String, String> headers) throws IOException {
-    request = createHeaderPostRequest(url, params, headers);
-    Call call = okHttpClient.newCall(request);
-    return call.execute();
-
-  }
+//  public Response syncPostWithHeaders(String url, Map<String, Object> params,
+//                                      Map<String, String> headers) throws IOException {
+//    request = createHeaderPostRequest(url, params, headers);
+//    Call call = okHttpClient.newCall(request);
+//
+//    if (isEnabledRetry()) {
+//      return retryRequest(call, maxRetryCount);
+//    }
+//    return retryRequest(call, 1);
+//  }
 
   public Response syncPostWithHeaders(String url, Object params,
                                       Map<String, String> headers) throws IOException {
     request = createHeaderPostRequest(url, params, headers);
     Call call = okHttpClient.newCall(request);
-    return call.execute();
-
+    if (isEnabledRetry()) {
+      return retryRequest(call, maxRetryCount);
+    }
+    return retryRequest(call, 1);
   }
 
   /**
@@ -198,6 +215,20 @@ public class OkRestTemplate {
     okHttpClient.newCall(request).enqueue(new ResponseCallback(okHttpClient, request));
   }
 
+
+  private Response retryRequest(Call call, Integer maxRetryCount) throws IOException {
+    Response response = null;
+    int retry = 0;
+    while (isEnabledRetry()
+        && retry++ < maxRetryCount
+        && response == null) {
+      response = call.execute();
+    }
+    if (response == null) {
+      throw new IOException("target host is not response.");
+    }
+    return response;
+  }
 
   private static Request createNoHeaderPostRequest(String url, Map<String, Object> params) {
     RequestBody requestBody = OKHttpUtils.parseParams(params);
@@ -271,6 +302,7 @@ public class OkRestTemplate {
     public void onResponse(Call call, Response response) throws IOException {
       this.retryCount = 0;
     }
+
   }
 
 }

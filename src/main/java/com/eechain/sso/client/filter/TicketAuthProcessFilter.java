@@ -17,9 +17,9 @@ import java.io.IOException;
  * Create by haloo on 2019-04-19
  */
 
-public class TicketAuthProccessFileter extends AbstractPreAuthProcessFilter {
+public class TicketAuthProcessFilter extends AbstractPreAuthProcessFilter {
 
-  public TicketAuthProccessFileter(AuthManager authManager) {
+  public TicketAuthProcessFilter(AuthManager authManager) {
     setAuthManager(authManager);
   }
 
@@ -36,7 +36,7 @@ public class TicketAuthProccessFileter extends AbstractPreAuthProcessFilter {
     AuthInfo authInfo = new AuthInfo();
     authInfo.setPrinciple(principal);
     authInfo.setCredential(credentials);
-    // 检验，不同使用失败认证策略
+    // 检验，不通过使用失败认证策略
     try {
       getAuthManager().verifyTick(authInfo);
     } catch (AuthenticationException ex) {

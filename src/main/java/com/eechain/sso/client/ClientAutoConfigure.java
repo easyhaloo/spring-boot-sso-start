@@ -2,7 +2,7 @@ package com.eechain.sso.client;
 
 import com.eechain.sso.client.filter.LoginAuthProcessFilter;
 import com.eechain.sso.client.filter.LogoutProccessFileter;
-import com.eechain.sso.client.filter.TicketAuthProccessFileter;
+import com.eechain.sso.client.filter.TicketAuthProcessFilter;
 import com.eechain.sso.client.handler.AuthManager;
 import com.eechain.sso.client.handler.LogoutSuccessHandler;
 import com.eechain.sso.client.handler.logout.CompositeLogoutHandler;
@@ -44,8 +44,8 @@ public class ClientAutoConfigure {
   @Bean
   public FilterRegistrationBean ticketFilter(AuthManager authManager) {
     FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-    TicketAuthProccessFileter ticketAuthProccessFileter =
-        new TicketAuthProccessFileter(authManager);
+    TicketAuthProcessFilter ticketAuthProccessFileter =
+        new TicketAuthProcessFilter(authManager);
     registrationBean.setFilter(ticketAuthProccessFileter);
     registrationBean.addUrlPatterns("/**");
     registrationBean.setName("ticket");

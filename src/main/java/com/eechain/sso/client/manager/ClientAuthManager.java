@@ -15,7 +15,6 @@ import java.util.Map;
 /**
  * Create by haloo on 2019-04-18
  */
-@ConditionClientAuthManager
 @Slf4j
 public class ClientAuthManager extends AbstractAuthManager {
 
@@ -33,6 +32,8 @@ public class ClientAuthManager extends AbstractAuthManager {
   public ClientAuthManager(OkRestTemplate okRestTemplate, Generator generator) {
     this.okRestTemplate = okRestTemplate;
     this.generator = generator;
+    // 重试策略由调用者自己控制
+    this.okRestTemplate.setEnabledRetry(false);
   }
 
   @Override
@@ -84,7 +85,7 @@ public class ClientAuthManager extends AbstractAuthManager {
   @Override
   public void logout(Authentication authentication) throws AuthenticationException {
     String serviceUrl = generator.serviceUrl();
-    String logoutUrl = serviceUrl + LOGIN_URL;
+    String logoutUrl = serviceUrl + LOGOUT_URL;
     Response response = null;
     int retry = 0;
 

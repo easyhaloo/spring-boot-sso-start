@@ -1,6 +1,7 @@
 package com.eechain.sso.client.handler.auth;
 
 import com.eechain.sso.client.authentication.Authentication;
+import com.eechain.sso.client.constant.RequestHeader;
 import com.eechain.sso.client.context.AuthContext;
 import com.eechain.sso.client.context.AuthContextHolder;
 import com.eechain.sso.client.context.DefaultAuthContext;
@@ -25,6 +26,10 @@ public class SaveUserInfoAuthSuccessHandler implements AuthSuccessHandler {
     this.authContext = new DefaultAuthContext();
   }
 
+  public SaveUserInfoAuthSuccessHandler(AuthSuccessHandler delegate) {
+    this.delegate = delegate;
+  }
+
   public SaveUserInfoAuthSuccessHandler(AuthContext authContext) {
     this.authContext = authContext;
   }
@@ -35,6 +40,8 @@ public class SaveUserInfoAuthSuccessHandler implements AuthSuccessHandler {
       throws IOException, ServletException {
     this.authContext.setAuthentication(authentication);
     AuthContextHolder.setContext(this.authContext);
+    Object credential = authentication.getCredential();
+    response.setHeader(RequestHeader.ACCESS, (String) credential);
     if (delegate != null) {
       delegate.onAuthenticationSuccess(request, response, authentication);
     }

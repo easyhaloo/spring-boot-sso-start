@@ -46,7 +46,6 @@ public final class OKHttpUtils {
     }
 
     String contentType = response.header("Content-Type");
-    System.out.println(contentType.contains("text/javascript"));
     if (contentType == null || contentType == ""
         || !contentType.contains("application/json")) {
       throw new RuntimeException("response Content-Type unsupported ,Content-Type :  " +

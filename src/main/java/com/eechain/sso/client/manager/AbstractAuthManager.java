@@ -7,7 +7,7 @@ import com.eechain.sso.client.handler.AuthManager;
  */
 public abstract class AbstractAuthManager implements AuthManager {
 
-  protected static final String AUTH_URL = "/session/verify";
+  protected static final String AUTH_URL = "/session/validation";
   protected static final String LOGIN_URL = "/account/login";
   protected static final String LOGOUT_URL = "/session/logout";
 

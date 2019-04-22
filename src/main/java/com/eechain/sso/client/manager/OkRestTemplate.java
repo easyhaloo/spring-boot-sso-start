@@ -3,6 +3,7 @@ package com.eechain.sso.client.manager;
 import com.eechain.sso.client.utils.OKHttpUtils;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -10,9 +11,6 @@ import okhttp3.Response;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.RequestBody;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
@@ -22,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * OK rest模版，用于跟sso-service 通信，或者其他子系统通信的工具
  * Create by haloo on 2019-04-18
  */
-@Component
+@Slf4j
 public class OkRestTemplate {
 
   private OkHttpClient okHttpClient;
@@ -61,12 +59,6 @@ public class OkRestTemplate {
         .build();
   }
 
-
-  @Bean
-  @ConditionalOnClass(OkHttpClient.class)
-  public OkRestTemplate okRestTemplate() {
-    return new OkRestTemplate();
-  }
 
   /**
    * 同步调用get方法
@@ -167,11 +159,11 @@ public class OkRestTemplate {
 //    }
 //    return retryRequest(call, 1);
 //  }
-
   public Response syncPostWithHeaders(String url, Object params,
                                       Map<String, String> headers) throws IOException {
     request = createHeaderPostRequest(url, params, headers);
     Call call = okHttpClient.newCall(request);
+    log.info("the request : {} ,the params : {}", request, params);
     if (isEnabledRetry()) {
       return retryRequest(call, maxRetryCount);
     }
@@ -219,8 +211,7 @@ public class OkRestTemplate {
   private Response retryRequest(Call call, Integer maxRetryCount) throws IOException {
     Response response = null;
     int retry = 0;
-    while (isEnabledRetry()
-        && retry++ < maxRetryCount
+    while (retry++ < maxRetryCount
         && response == null) {
       response = call.execute();
     }

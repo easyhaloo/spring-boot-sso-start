@@ -19,15 +19,15 @@ import java.io.IOException;
  * Create by haloo on 2019-04-19
  */
 @Slf4j
-public class LogoutProccessFileter implements Filter {
+public class LogoutProcessFilter implements Filter {
 
   private final LogoutHandler logoutHandler;
 
   private final LogoutSuccessHandler logoutSuccessHandler;
 
 
-  public LogoutProccessFileter(LogoutHandler logoutHandler,
-                               LogoutSuccessHandler logoutSuccessHandler) {
+  public LogoutProcessFilter(LogoutHandler logoutHandler,
+                             LogoutSuccessHandler logoutSuccessHandler) {
     this.logoutHandler = logoutHandler;
     this.logoutSuccessHandler = logoutSuccessHandler;
   }
@@ -47,7 +47,9 @@ public class LogoutProccessFileter implements Filter {
         this.logoutSuccessHandler.onLogoutSuccess(req, resp, authentication);
       }
     }
-    chain.doFilter(request, response);
+    if (!response.isCommitted()) {
+      chain.doFilter(request, response);
+    }
   }
 
 

@@ -2,6 +2,7 @@ package com.eechain.sso.client;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @ConfigurationProperties(prefix = "sso.client")
 @Component
 @Getter
+@ToString
 @Setter
 public class ClientProperties {
 

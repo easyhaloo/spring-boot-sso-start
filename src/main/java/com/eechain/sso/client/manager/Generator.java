@@ -60,6 +60,10 @@ public class Generator {
     }
   }
 
+  public Long appId() {
+    return properties.getAppId();
+  }
+
   public String apiKey() {
     return properties.getApiKey();
   }

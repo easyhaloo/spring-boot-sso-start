@@ -37,15 +37,24 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
   @Override
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain)
       throws IOException, ServletException {
-
+    log.info("cross filter the class name :", this.getClass().getName());
     if (requiresAuthentication((HttpServletRequest) req)) {
       log.debug("authentication is changed , now need reAuthenticated");
       doAuthenticate((HttpServletRequest) req, (HttpServletResponse) resp);
     }
-    filterChain.doFilter(req, resp);
+    if (!resp.isCommitted()) {
+      filterChain.doFilter(req, resp);
+    }
   }
 
-
+  /**
+   * 登陆验证
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   * @throws ServletException
+   */
   private void doAuthenticate(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     Object principal = getPrincipal(request);
@@ -53,7 +62,7 @@ public abstract class AbstractPreAuthProcessFilter implements Filter {
 
     if (principal == null) {
       log.warn("principal is null,authentication is reject.");
-      throw new AuthenticationException("用户名不存在");
+      throw new AuthenticationException("认证过期，请重新认证");
     }
 
     if (credentials == null) {

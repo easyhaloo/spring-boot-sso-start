@@ -14,18 +14,21 @@ public class AuthInfo implements Authentication, Serializable {
   private String name;
   private Object principle;
   private Object credential;
-  private String accessToken;
+  private String access_token;
   private String refreshToken;
 
 
   @Override
   public Object getPrincipal() {
-    return accessToken;
+    return principle;
   }
 
   @Override
   public Object getCredential() {
-    return accessToken;
+    if (access_token != null) {
+      return access_token;
+    }
+    return credential;
   }
 
   @Override
@@ -35,6 +38,6 @@ public class AuthInfo implements Authentication, Serializable {
 
   @Override
   public String getName() {
-    return null;
+    return name;
   }
 }

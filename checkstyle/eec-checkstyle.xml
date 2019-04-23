@@ -7,7 +7,7 @@
 <module name="Checker">
 
     <module name="BeforeExecutionExclusionFileFilter">
-        <property name="fileNamePattern" value="*Tests\.java$"/>
+        <property name="fileNamePattern" value="[\w]*Tests\.java$"/>
     </module>
 
     <property name="charset" value="UTF-8"/>

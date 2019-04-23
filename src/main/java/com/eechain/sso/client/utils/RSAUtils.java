@@ -101,12 +101,24 @@ public final class RSAUtils {
     return cryptByPrivateKey(data, key, Cipher.ENCRYPT_MODE);
   }
 
+  public static byte[] decryptByPublicKey(byte[] data, String key) throws Exception {
+    return cryptByPublicKey(data, key, Cipher.DECRYPT_MODE);
+  }
 
-  public static byte[] cryptByPrivateKey(byte[] data, String key, int mode) throws Exception {
+
+  private static byte[] cryptByPrivateKey(byte[] data, String key, int mode) throws Exception {
     PrivateKey pvk = generatorPrivateKey(key);
     Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
     cipher.init(mode, pvk);
     return cryptWithBlock(data, cipher, MAX_ENCRYPT_BLOCK);
+  }
+
+
+  private static byte[] cryptByPublicKey(byte[] data, String key, int mode) throws Exception {
+    PublicKey publicKey = generatorPublicKey(key);
+    Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+    cipher.init(mode, publicKey);
+    return cryptWithBlock(data, cipher, MAX_DECRYPT_BLOCK);
   }
 
 

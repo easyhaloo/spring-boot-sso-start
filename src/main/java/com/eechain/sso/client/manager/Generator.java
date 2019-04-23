@@ -3,6 +3,7 @@ package com.eechain.sso.client.manager;
 import com.eechain.sso.client.ClientProperties;
 import com.eechain.sso.client.utils.RSAUtils;
 import com.eechain.sso.client.utils.RandomString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Import;
 
 
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Import;
  * Create by haloo on 2019-04-18
  */
 @Import(ClientProperties.class)
+@Slf4j
 public class Generator {
 
 
@@ -41,6 +43,7 @@ public class Generator {
     String secureKey = properties.getSecureKey();
     try {
       byte[] bytes = RSAUtils.encryptByPrivateKey(origin.getBytes("utf-8"), secureKey);
+      log.info("generator sdk tht s0  : {}, the  s1 :{}", origin, RSAUtils.encryptBase64(bytes));
       return origin + RSAUtils.encryptBase64(bytes);
     } catch (Exception e) {
       return null;

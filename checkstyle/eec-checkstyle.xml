@@ -4,7 +4,12 @@
         "http://www.pup pycrawl.com/dtds/configuration_1_3.dtd">
 
 
-<module name = "Checker">
+<module name="Checker">
+
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="*Tests\.java$"/>
+    </module>
+
     <property name="charset" value="UTF-8"/>
 
     <property name="severity" value="warning"/>
@@ -36,7 +41,6 @@
         <module name="MethodName"/>
 
 
-
         <!-- 检查代码块:起始大括号和if等同行，不能有空的代码块，结束大括号另起一行-->
         <module name="LeftCurly"/>
         <module name="NeedBraces"/>
@@ -62,7 +66,7 @@
 
         <!-- 检查是否有多余的修饰符，例如：接口中的方法不必使用public、abstract修饰
                    tokens: 检查的类型 -->
-        <module name="RedundantModifier" />
+        <module name="RedundantModifier"/>
 
 
         <!-- 禁止空catch快 -->
@@ -123,7 +127,6 @@
         <module name="NestedTryDepth">
             <property name="max" value="2"/>
         </module>
-
 
 
     </module>

@@ -33,7 +33,7 @@ public class HttpStatusReturingAuthSuccessHandler implements AuthSuccessHandler 
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request,
-                                      HttpServletResponse response, Authentication authentication) 
+                                      HttpServletResponse response, Authentication authentication)
       throws IOException, ServletException {
 
     response.setContentType("application/json;charset=utf-8");

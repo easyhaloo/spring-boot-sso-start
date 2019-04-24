@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.eechain</groupId>
-    <artifactId>spring-boot-sso-starter</artifactId>
+    <artifactId>sso-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-sso-starter</name>
     <description>sso client</description>
